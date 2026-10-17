@@ -92,6 +92,7 @@
       })
       .catch((err) => {
         if (err.name !== "AbortError") {
+          window.Sentry?.captureException(err);
           error = true;
         }
       })
@@ -185,6 +186,7 @@
         divisionRank: player.divisionRank,
       };
     } catch (err) {
+      window.Sentry?.captureException(err);
       playerError = true;
     } finally {
       playerLoading = false;

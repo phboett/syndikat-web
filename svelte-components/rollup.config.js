@@ -9,54 +9,73 @@ import replace from '@rollup/plugin-replace';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const production = !process.env.ROLLUP_WATCH;
+const assetPath = (file) => path.resolve(__dirname, '../assets', file);
 
-export default {
-	input: path.resolve(__dirname, 'src/main.js'),
-	output: {
-		sourcemap: !production,
-		format: 'iife',
-		name: 'app',
-		file: path.resolve(__dirname, '../assets/svelte-bundle.js'),
-		globals: {
-			'tippy.js': 'tippy'
+function environmentReplacements() {
+	return replace({
+		'process.env.API_URL': JSON.stringify(process.env.API_URL || ''),
+		'process.env.SENTRY_DSN': JSON.stringify(process.env.SENTRY_DSN || ''),
+		'process.env.SENTRY_ENVIRONMENT': JSON.stringify(
+			process.env.SENTRY_ENVIRONMENT || process.env.CONTEXT || process.env.NODE_ENV || 'production',
+		),
+		'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || (production ? 'production' : 'development')),
+		preventAssignment: true,
+	});
+}
+
+const sharedOutput = {
+	sourcemap: true,
+	format: 'iife',
+};
+
+export default [
+	{
+		input: path.resolve(__dirname, 'src/main.js'),
+		output: {
+			...sharedOutput,
+			name: 'app',
+			file: assetPath('svelte-bundle.js'),
+			globals: {
+				'tippy.js': 'tippy'
+			}
+		},
+		external: ['tippy.js'],
+		plugins: [
+			svelte({
+				compilerOptions: {
+					// enable run-time checks when not in production
+					dev: !production
+				}
+			}),
+			css({ output: 'svelte-bundle.css' }),
+			resolve({
+				browser: true,
+				dedupe: ['svelte'],
+				exportConditions: ['svelte']
+			}),
+			commonjs(),
+			production && minify(),
+			environmentReplacements()
+		],
+		watch: {
+			clearScreen: false
 		}
 	},
-	external: ['tippy.js'],
-	plugins: [
-		svelte({
-			compilerOptions: {
-				// enable run-time checks when not in production
-				dev: !production
-			}
-		}),
-		// we'll extract any component CSS out into
-		// a separate file - better for performance
-		css({ output: 'svelte-bundle.css' }),
-
-		// If you have external dependencies installed from
-		// npm, you'll most likely need these plugins. In
-		// some cases you'll need additional configuration -
-		// consult the documentation for details:
-		// https://github.com/rollup/plugins/tree/master/packages/commonjs
-		resolve({
-			browser: true,
-			dedupe: ['svelte'],
-			exportConditions: ['svelte']
-		}),
-		commonjs(),
-
-		// If we're building for production (npm run build
-		// instead of npm run dev), minify
-		production && minify(),
-
-		replace({
-			'process.env.API_URL': JSON.stringify(process.env.API_URL),
-			'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-			preventAssignment: true,
+	{
+		input: path.resolve(__dirname, 'src/sentry.js'),
+		output: {
+			...sharedOutput,
+			name: 'sentryBundle',
+			file: assetPath('sentry-bundle.js')
 		},
-		)
-	],
-	watch: {
-		clearScreen: false
+		plugins: [
+			resolve({ browser: true }),
+			commonjs(),
+			production && minify(),
+			environmentReplacements()
+		],
+		watch: {
+			clearScreen: false
+		}
 	}
-};
+];

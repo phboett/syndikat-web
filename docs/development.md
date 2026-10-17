@@ -46,6 +46,13 @@ Browser code currently chooses `http://localhost:8080` for `localhost`/`127.0.0.
 - product feed and product-search SSE stream;
 - training status, participant listing, signup, and removal.
 
+Browser error reporting uses the Sentry Browser SDK. Set the public Sentry `SENTRY_DSN`
+environment variable in the Netlify build settings to enable it; `SENTRY_ENVIRONMENT`
+can override the build context used to label events. The DSN is included in the public
+bundle and is not a secret. Query strings, request bodies, cookies, headers, UI input,
+and console breadcrumbs are removed before events are sent. Production source maps are
+published with the bundles so Sentry can display original source locations.
+
 Read the API schemas in [mxlttr/syndikat-api](https://github.com/mxlttr/syndikat-api/blob/master/docs/openapi.yaml) before changing a request or response assumption.
 
 The `/tournaments/on-tour` response includes Syndikat players from both the starter and waiting lists. Each `our_players` entry includes `waitlisted` (boolean); the website lists starters first and groups waiting-list players in parentheses, e.g. “Person 1, Person 2, (Person 3, Person 4)”.

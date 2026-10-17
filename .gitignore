@@ -5,5 +5,6 @@ _site/
 .DS_Store
 node_modules/
 assets/svelte-bundle*
+assets/sentry-bundle*
 assets/css/style.min.css
 editorial/*

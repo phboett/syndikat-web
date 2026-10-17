@@ -62,6 +62,7 @@ async function getTournaments(type) {
     const response = await fetch(url, { credentials: 'include' });
     return await response.json();
   } catch (error) {
+    window.Sentry?.captureException(error);
     console.error(error);
     return [];
   }
@@ -259,6 +260,7 @@ async function handleRouteSubmit(event) {
 
     renderRoute(payload);
   } catch (error) {
+    window.Sentry?.captureException(error);
     console.error(error);
     handleRouteError();
   } finally {

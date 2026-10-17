@@ -58,6 +58,7 @@ async function initRatings() {
     await renderRatings(ratings, $el);
     setupListeners($el.querySelectorAll('tr'));
   } catch (err) {
+    window.Sentry?.captureException(err);
     console.error(err);
     renderRatingsError($el);
   }

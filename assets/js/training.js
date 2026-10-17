@@ -79,6 +79,7 @@ async function initializeTraining() {
     await loadParticipants();
     initializeForm();
   } catch (error) {
+    window.Sentry?.captureException(error);
     console.error(error);
   }
 }

@@ -8,6 +8,7 @@ async function initBagTags() {
     const ranking = await fetch(`${API_URL}/bagtag`, { credentials: 'include' }).then(response => response.json());
     renderRanking(ranking, $el);
   } catch (err) {
+    window.Sentry?.captureException(err);
     console.error(err);
   }
 }

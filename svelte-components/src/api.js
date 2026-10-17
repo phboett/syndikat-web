@@ -32,6 +32,7 @@ export function streamProducts(query, callbacks = {}) {
     try {
       return JSON.parse(event.data);
     } catch (err) {
+      window.Sentry?.captureException(new Error('Failed to parse product search event data'));
       console.error('Failed to parse product stream event.', err);
       return null;
     }
@@ -78,6 +79,7 @@ export async function fetchNewestProducts() {
     }
     return await response.json();
   } catch (err) {
+    window.Sentry?.captureException(err);
     console.error("Uncaught (in promise) TypeError: NetworkError when attempting to fetch resource.", err);
     return [];
   }
@@ -90,7 +92,9 @@ export async function fetchRatings({ signal, club = "", division = "", search = 
   if (search) params.set("search", search);
   const response = await fetch(`${API_URL}/ratings?${params}`, { signal, credentials: 'include' });
   if (!response.ok) {
-    throw new Error(`Failed to load ratings: ${response.status}`);
+    const error = new Error(`Failed to load ratings: ${response.status}`);
+    error.status = response.status;
+    throw error;
   }
   const result = await response.json();
   if (!result || !Array.isArray(result.items)) {
@@ -101,6 +105,10 @@ export async function fetchRatings({ signal, club = "", division = "", search = 
 
 export async function fetchPlayer(id, { signal } = {}) {
   const response = await fetch(`${API_URL}/players/${encodeURIComponent(id)}`, { signal, credentials: 'include' });
-  if (!response.ok) throw new Error(`Failed to load player: ${response.status}`);
+  if (!response.ok) {
+    const error = new Error(`Failed to load player: ${response.status}`);
+    error.status = response.status;
+    throw error;
+  }
   return response.json();
 }
