@@ -35,6 +35,8 @@ Zum Buffet steuerten die Teilnehmenden verschiedene Speisen bei. Es stand nach d
 
 Der Tag zeigte sich von seiner herbstlichen Seite: Es war kühl, zwischendurch ließ sich aber auch strahlender Sonnenschein blicken. Pünktlich zum Start der zweiten Runde setzte dann kräftiger Regen ein. Die nassen Bedingungen machten das Spielen anspruchsvoller und wirbelten die Rangliste noch einmal ordentlich durcheinander.
 
+![Teilnehmende mit Regenschirmen über ihren Disc-Golf-Trolleys auf dem nassen Kurs](/assets/images/posts/herbstfest-2026-regen.jpg)
+
 ## Ergebnisse aus zwei Runden
 
 In der MPO gewann Nils Teckenberg mit −9. Erik Steup und Elmar Bode teilten sich mit je −7 den zweiten Platz. Die FPO-Wertung entschied Sarah Ziegler mit −3 für sich. Die vollständigen Scores und Platzierungen gibt es bei UDisc für [Runde 1](https://udisc.com/events/herbstfest-26-HcmQu5/leaderboard?round=1) und [Runde 2](https://udisc.com/events/herbstfest-26-HcmQu5/leaderboard?round=2).
