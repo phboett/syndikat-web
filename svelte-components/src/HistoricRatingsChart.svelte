@@ -8,10 +8,10 @@
   const chartMargins = { top: 20, right: 20, bottom: 42, left: 64 };
   const yearInMilliseconds = 365 * 24 * 60 * 60 * 1000;
   const rangeOptions = [
-    { id: "ytd", label: "YTD" },
-    { id: "1y", label: "1Y" },
-    { id: "3y", label: "3Y" },
-    { id: "all", label: "Alle" },
+    { id: "ytd", label: "YTD", periodDescription: "seit Jahresbeginn" },
+    { id: "1y", label: "1Y", periodDescription: "im letzten Jahr" },
+    { id: "3y", label: "3Y", periodDescription: "in den letzten 3 Jahren" },
+    { id: "all", label: "Alle", periodDescription: "insgesamt" },
   ];
   let activePoint = null;
   let selectedRange = "1y";
@@ -26,7 +26,15 @@
 
   function formatRating(value) {
     return new Intl.NumberFormat("de-DE", {
-      maximumFractionDigits: 0,
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1,
+    }).format(Number(value));
+  }
+
+  function formatPercentage(value) {
+    return new Intl.NumberFormat("de-DE", {
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 1,
     }).format(Number(value));
   }
 
@@ -73,7 +81,7 @@
     const lastRating = points[points.length - 1].numericRating;
     const change = lastRating - firstRating;
     const percentage = firstRating ? (change / firstRating) * 100 : 0;
-    const rangeLabel = rangeOptions.find((option) => option.id === range)?.label ?? "Alle";
+    const rangeDescription = rangeOptions.find((option) => option.id === range)?.periodDescription ?? "insgesamt";
 
     return {
       change: points.length === 1 ? null : change,
@@ -81,7 +89,7 @@
       firstRating,
       lastRating,
       percentage: points.length === 1 ? null : percentage,
-      label: rangeLabel,
+      label: rangeDescription,
       singlePoint: points.length === 1,
     };
   }
@@ -139,7 +147,11 @@
     const x = (timestamp) => chartMargins.left + ((timestamp - firstTimestamp) / timeRange) * plotWidth;
     const y = (rating) => chartMargins.top + ((upperBound - rating) / (upperBound - lowerBound)) * plotHeight;
     const rawChartPoints = points.map((point) => ({ ...point, x: x(point.timestamp), y: y(point.numericRating) }));
-    const chartPoints = reducePoints(rawChartPoints, width);
+    const minimumPointDistance = width < 480 ? 16 : 9;
+    const pointCapacity = Math.floor(width / minimumPointDistance);
+    const chartPoints = rawChartPoints.length <= pointCapacity
+      ? rawChartPoints
+      : reducePoints(rawChartPoints, width);
     const path = chartPoints.reduce(
       (value, point, index) => index === 0 ? `M ${point.x} ${point.y}` : `${value} H ${point.x} V ${point.y}`,
       "",
@@ -159,7 +171,7 @@
   <div class="rating-history" aria-label="Historischer Ratingverlauf">
     {#if trendSummary}
       <div class="rating-history__header">
-        <div class="rating-history__quote" aria-label={trendSummary.singlePoint ? `Aktuelles Rating ${formatRating(trendSummary.lastRating)}; keine Vergleichsdaten für ${trendSummary.label}` : `Aktuelles Rating ${formatRating(trendSummary.lastRating)}, Veränderung ${trendSummary.change >= 0 ? "plus" : "minus"} ${formatRating(Math.abs(trendSummary.change))} seit ${trendSummary.label}`}>
+        <div class="rating-history__quote" aria-label={trendSummary.singlePoint ? `Aktuelles Rating ${formatRating(trendSummary.lastRating)}; keine Vergleichsdaten ${trendSummary.label}` : `Aktuelles Rating ${formatRating(trendSummary.lastRating)}, Veränderung ${trendSummary.change >= 0 ? "plus" : "minus"} ${formatRating(Math.abs(trendSummary.change))} Punkte ${trendSummary.label}`}>
           {#if trendSummary.singlePoint}
             <span class="rating-history__period">Keine Vergleichsdaten für diesen Zeitraum</span>
           {:else}
@@ -169,7 +181,7 @@
               {:else}
                 <TrendingDown size={14} strokeWidth={2.5} aria-hidden="true" />
               {/if}
-              {trendSummary.change >= 0 ? "+" : "−"}{formatRating(Math.abs(trendSummary.change))} ({trendSummary.percentage >= 0 ? "+" : "−"}{formatRating(Math.abs(trendSummary.percentage))} %)
+              {trendSummary.change >= 0 ? "+" : "−"}{formatRating(Math.abs(trendSummary.change))} Punkte ({trendSummary.percentage >= 0 ? "+" : "−"}{formatPercentage(Math.abs(trendSummary.percentage))} %)
             </span>
           {/if}
         </div>
