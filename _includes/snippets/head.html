@@ -187,7 +187,7 @@
   {%- if first_post_image != "" -%}
     {%- capture first_post_preload_href -%}{% include snippets/netlify_image_url.html src=first_post_image w=700 %}{%- endcapture -%}
     {%- capture first_post_preload_srcset -%}{% include snippets/netlify_srcset.html src=first_post_image widths="240,320,480,640,800" %}{%- endcapture -%}
-    <link rel="preload" fetchpriority="high" media="(max-width: 576px)" href="{{ first_post_preload_href | strip }}" imagesrcset="{{ first_post_preload_srcset | strip }}" imagesizes="calc(100vw - 40px)" as="image" type="image/jpeg">
+    <link rel="preload" fetchpriority="high" media="(max-width: 576px)" href="{{ first_post_preload_href | strip }}" imagesrcset="{{ first_post_preload_srcset | strip }}" imagesizes="calc(100vw - 40px)" as="image">
   {%- endif -%}
   <link rel="preload" fetchpriority="high" media="(min-width: 577px)" href="{{ hero_preload_href | strip }}"
     imagesrcset="{{ hero_preload_srcset | strip }}"
