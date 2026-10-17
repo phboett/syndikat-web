@@ -1,6 +1,6 @@
 <script>
   import { onMount } from "svelte";
-  import { TrendingUp, TrendingDown } from "lucide-svelte";
+  import { TrendingUp, TrendingDown, X } from "lucide-svelte";
   import { fetchPlayer, fetchRatings } from "./api";
   import HistoricRatingsChart from "./HistoricRatingsChart.svelte";
 
@@ -14,6 +14,7 @@
   let playerLoading = false;
   let playerError = false;
   let noResultsEventKey = "";
+  let searchInputElement;
   let ratingsController;
   const pageSize = 50;
   let currentPage = 1;
@@ -135,6 +136,12 @@
     searchTimer = setTimeout(() => loadRatings(1), 250);
   }
 
+  function clearPlayerSearch() {
+    search = "";
+    searchPlayers();
+    searchInputElement?.focus();
+  }
+
   function avatarColor(player) {
     return avatarColorForName(`${player.firstName} ${player.lastName}`);
   }
@@ -220,11 +227,23 @@
 
 <div class="toolbar">
   <div class="search__group rating__search">
+    {#if search}
+      <button
+        type="button"
+        class="search__close"
+        aria-label="Suche löschen"
+        title="Suche löschen"
+        on:click={clearPlayerSearch}
+      >
+        <X size={18} aria-hidden="true" />
+      </button>
+    {/if}
     <input
       type="search"
       name="search"
       data-rating-search
       class="search__text"
+      bind:this={searchInputElement}
       aria-label="Spieler oder Verein suchen"
       placeholder="Spieler/Verein suchen..."
       bind:value={search}
@@ -470,6 +489,8 @@
 
 <style>
   :global(body:has(dialog:modal)) { overflow: hidden; }
+  .rating__search .search__text { padding-right: 64px; }
+  :global(.rating__search input[type="search"]::-webkit-search-cancel-button) { -webkit-appearance: none; appearance: none; }
   .rating-player-row { cursor: pointer; }
   .rating-player-row:hover, .rating-player-row:focus-visible { background: var(--background-alt-color, rgb(0 0 0 / 5%)); outline: none; }
   :global(#ratings .rating-player-row:hover > td), :global(#ratings .rating-player-row:focus-visible > td) { background: var(--background-alt-color, rgb(0 0 0 / 5%)); }
