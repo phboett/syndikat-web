@@ -39,7 +39,7 @@ Der Tag zeigte sich von seiner herbstlichen Seite: Es war kühl, zwischendurch l
 
 ## Ergebnisse aus zwei Runden
 
-In der MPO gewann Nils Teckenberg mit −9. Erik Steup und Elmar Bode teilten sich mit je −7 den zweiten Platz. Die FPO-Wertung entschied Sarah Ziegler mit −3 für sich. Die vollständigen Scores und Platzierungen gibt es bei UDisc für [Runde 1](https://udisc.com/events/herbstfest-26-HcmQu5/leaderboard?round=1) und [Runde 2](https://udisc.com/events/herbstfest-26-HcmQu5/leaderboard?round=2).
+In der MPO gewann Nils Teckenberg mit −5. Erik Steup und Elmar Bode teilten sich mit je −3 den zweiten Platz. Die FPO-Wertung entschied Sarah Ziegler mit +1 für sich. Die vollständigen Scores und Platzierungen gibt es bei UDisc für [Runde 1](https://udisc.com/events/herbstfest-26-HcmQu5/leaderboard?round=1) und [Runde 2](https://udisc.com/events/herbstfest-26-HcmQu5/leaderboard?round=2).
 
 ![Siegerehrung der FPO-Wertung beim Herbstfest](/assets/images/posts/herbstfest-2026-fpo-ehrung.jpg)
 
