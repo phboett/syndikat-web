@@ -19,7 +19,7 @@ The autumn festival used its own 13-hole layout, including four new holes. This 
 
 ## Honouring the summer winners
 
-The awards focused on the winners of the summer season of our [Syndication Weekly](https://udisc.com/leagues/syndication-weekly-offene-liga-koeln-dkb2vB/standings?seasonId=season_iepthr6ch9ojdfly7avrpztn&division=GEN). Looking back at the achievements of the past months gave the league season a festive finish. A big thank you to [Thrownature](https://thrownatur-discgolf.de/), whose support made the prizes for the award ceremony possible. Thanks also to the sports office of the Nippes district for letting us use the course, and to the groundskeeper, who prepared everything superbly.
+The awards focused on the winners of the summer season of our [Syndication Weekly](https://udisc.com/leagues/syndication-weekly-offene-liga-koeln-dkb2vB/standings?seasonId=season_iepthr6ch9ojdfly7avrpztn&division=GEN). Looking back at the achievements of the past months gave the league season a festive finish. A big thank you to [Thrownature](https://thrownatur-discgolf.de/), whose support made the prizes for the award ceremony possible. Thanks also to the sports office of the City of Cologne for letting us use the course, and to the groundskeeper, who prepared everything superbly.
 
 ![Three participants at the summer winners' award ceremony](/assets/images/posts/herbstfest-2026-ehrung.jpg)
 
